@@ -2,7 +2,7 @@
 package main
 
 import (
-	"sorataskapi/internal/handler/healthz"
+	"sorataskapi/internal/routes"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,9 +12,7 @@ func main() {
 
 	router.SetTrustedProxies([]string{"127.0.0.1"})
 
-	apiV1 := router.Group("/v1")
-
-	apiV1.GET("/healthz", healthz.CheckHealthz)
+	routes.InitRoutes(router)
 
 	router.Run("127.0.0.1:8080")
 }
