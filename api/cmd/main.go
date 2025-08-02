@@ -2,7 +2,7 @@
 package main
 
 import (
-	"net/http"
+	"sorataskapi/internal/handler/healthz"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,11 +12,7 @@ func main() {
 
 	apiV1 := router.Group("/v1")
 
-	apiV1.GET("/healthz", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "healthy",
-		})
-	})
+	apiV1.GET("/healthz", healthz.CheckHealthz)
 
 	router.Run(":8080")
 }
