@@ -1,0 +1,7 @@
+BASE_URL: ""
+HOST_NAME: ""
+APP_PORT: ""
+TRUST_PROXIES:
+  - ""
+ALLOWED_ORIGINS:
+  - ""

@@ -2,15 +2,16 @@ package routes
 
 import (
 	"net/http"
+	"sorataskapi/config"
 	"sorataskapi/internal/handler/healthz"
 
 	"github.com/gin-gonic/gin"
 	"github.com/unrolled/secure"
 )
 
-func SecurityMiddleware() gin.HandlerFunc {
+func SecurityMiddleware(appConfig config.Config) gin.HandlerFunc {
 	secureMiddleware := secure.New(secure.Options{
-		AllowedHosts:          []string{"localhost:8080"},
+		AllowedHosts:          appConfig.AllowedOrigins,
 		FrameDeny:             true,
 		ContentTypeNosniff:    true,
 		BrowserXssFilter:      true,
@@ -29,8 +30,8 @@ func SecurityMiddleware() gin.HandlerFunc {
 	}
 }
 
-func InitRoutes(router *gin.Engine) {
-	router.Use(SecurityMiddleware())
+func InitRoutes(router *gin.Engine, appConfig config.Config) {
+	router.Use(SecurityMiddleware(appConfig))
 
 	apiV1 := router.Group("/v1")
 

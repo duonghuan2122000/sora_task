@@ -2,17 +2,20 @@
 package main
 
 import (
+	"sorataskapi/config"
 	"sorataskapi/internal/routes"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	config.LoadConfig(".")
+
 	router := gin.Default()
 
-	router.SetTrustedProxies([]string{"127.0.0.1"})
+	router.SetTrustedProxies(config.AppConfig.TrustProxies)
 
-	routes.InitRoutes(router)
+	routes.InitRoutes(router, config.AppConfig)
 
-	router.Run("127.0.0.1:8080")
+	router.Run(config.AppConfig.HostName + ":" + config.AppConfig.AppPort)
 }
