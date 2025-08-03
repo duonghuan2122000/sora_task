@@ -7,11 +7,12 @@ import (
 )
 
 type Config struct {
-	BaseUrl        string   `mapstructure:"BASE_URL"`
-	HostName       string   `mapstructure:"HOST_NAME"`
-	AppPort        string   `mapstructure:"APP_PORT"`
-	TrustProxies   []string `mapstructure:"TRUST_PROXIES"`
-	AllowedOrigins []string `mapstructure:"ALLOWED_ORIGINS"`
+	BaseUrl               string   `mapstructure:"BASE_URL"`
+	HostName              string   `mapstructure:"HOST_NAME"`
+	AppPort               string   `mapstructure:"APP_PORT"`
+	TrustProxies          []string `mapstructure:"TRUST_PROXIES"`
+	AllowedOrigins        []string `mapstructure:"ALLOWED_ORIGINS"`
+	MysqlConnectionString string   `mapstructure:"MYSQL_CONNECTION_STRING"`
 }
 
 var AppConfig Config
