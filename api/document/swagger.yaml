@@ -1,0 +1,26 @@
+openapi: 3.1.0
+info:
+  title: Sora Task
+  version: 1.0.0
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit/
+servers:
+  - url: http://localhost:8080/v1
+paths:
+  /healthz:
+    get: 
+      summary: API health check
+      description: API health check
+      operationId: CheckHealthz
+      responses:
+        '200':
+          description: Thành công
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+
