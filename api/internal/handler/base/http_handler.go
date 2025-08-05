@@ -1,21 +1,21 @@
-package base
+package basehandler
 
 import (
 	"net/http"
-	"sorataskapi/internal/model/base"
+	basemodel "sorataskapi/internal/model/base"
 
 	"github.com/gin-gonic/gin"
 )
 
 func ToResponseSuccess(c *gin.Context, data any) {
-	c.AbortWithStatusJSON(http.StatusOK, &base.BaseResponse{
+	c.AbortWithStatusJSON(http.StatusOK, &basemodel.BaseResponse{
 		Status: true,
 		Data:   data,
 	})
 }
 
-func ToResponseError(c *gin.Context, error base.BaseResponseError) {
-	c.AbortWithStatusJSON(http.StatusOK, &base.BaseResponse{
+func ToResponseError(c *gin.Context, error basemodel.BaseResponseError) {
+	c.AbortWithStatusJSON(http.StatusOK, &basemodel.BaseResponse{
 		Status: false,
 		Error:  error,
 	})

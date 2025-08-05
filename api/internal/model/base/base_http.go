@@ -1,4 +1,4 @@
-package base
+package basemodel
 
 // BaseRequest strcut
 type BaseRequest struct {
