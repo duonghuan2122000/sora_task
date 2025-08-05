@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"sorataskapi/config"
 	"sorataskapi/internal/handler/healthz"
+	userhandler "sorataskapi/internal/handler/user"
 
 	"github.com/gin-gonic/gin"
 	"github.com/unrolled/secure"
@@ -33,7 +34,11 @@ func SecurityMiddleware(appConfig config.Config) gin.HandlerFunc {
 func InitRoutes(router *gin.Engine, appConfig config.Config) {
 	router.Use(SecurityMiddleware(appConfig))
 
+	userhandler.InitHandler()
+
 	apiV1 := router.Group("/v1")
 
 	apiV1.GET("/healthz", healthz.CheckHealthz)
+
+	apiV1.POST("/users/login/by-mail", userhandler.LoginByEmail)
 }

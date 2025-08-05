@@ -1,12 +1,12 @@
 package basemodel
 
 // BaseRequest strcut
-type BaseRequest struct {
-	Data BaseRequestData `json:"data"`
+type BaseRequest[TDto any] struct {
+	Data BaseRequestData[TDto] `json:"data"`
 }
 
-type BaseRequestData struct {
-	Attributes any `json:"attributes"`
+type BaseRequestData[TDto any] struct {
+	Attributes TDto `json:"attributes"`
 }
 
 // BaseResponse struct
