@@ -38,3 +38,22 @@ func LoginByEmail(c *gin.Context) {
 
 	basehandler.ToResponseSuccess(c, result)
 }
+
+func RegisterUser(c *gin.Context) {
+	var payload basemodel.BaseRequest[usermodel.RegisterUserRequest]
+	if err := c.ShouldBindJSON(&payload); err != nil {
+		basehandler.ToResponseError(c, basemodel.BaseResponseError{
+			Code:    "400",
+			Message: "Tham số không hợp lệ",
+		})
+		return
+	}
+	if err := userSvc.RegisterUser(payload.Data.Attributes); err != nil {
+		basehandler.ToResponseError(c, basemodel.BaseResponseError{
+			Code:    "999",
+			Message: "Thất bại",
+		})
+		return
+	}
+	basehandler.ToResponseSuccess(c, nil)
+}

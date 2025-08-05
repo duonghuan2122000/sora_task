@@ -1,16 +1,20 @@
 package userservice
 
 import (
+	"sorataskapi/internal/entity"
 	usermodel "sorataskapi/internal/model/user"
 	userrepository "sorataskapi/internal/repository/user"
+	"strings"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type UserService interface {
 	LoginByEmail(payload usermodel.LoginByEmailRequest) (*usermodel.LoginByEmailResponse, error)
+	RegisterUser(payload usermodel.RegisterUserRequest) error
 }
 
 type userService struct {
@@ -49,4 +53,15 @@ func (userSvc *userService) LoginByEmail(payload usermodel.LoginByEmailRequest) 
 	return &usermodel.LoginByEmailResponse{
 		AccessToken: accessToken,
 	}, nil
+}
+
+func (userSvc *userService) RegisterUser(payload usermodel.RegisterUserRequest) error {
+	passwordHased, _ := bcrypt.GenerateFromPassword([]byte(payload.Password), bcrypt.DefaultCost)
+	userEntity := entity.UserEntity{
+		Id:             strings.ReplaceAll(uuid.New().String(), "-", ""),
+		Email:          payload.Email,
+		PasswordHashed: string(passwordHased),
+	}
+	userSvc.userRepo.Insert(userEntity)
+	return nil
 }

@@ -41,4 +41,5 @@ func InitRoutes(router *gin.Engine, appConfig config.Config) {
 	apiV1.GET("/healthz", healthz.CheckHealthz)
 
 	apiV1.POST("/users/login/by-mail", userhandler.LoginByEmail)
+	apiV1.POST("/users/register", userhandler.RegisterUser)
 }

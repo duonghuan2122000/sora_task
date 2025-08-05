@@ -1,0 +1,26 @@
+meta {
+  name: Login bằng mail
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{BaseUrl}}/users/login/by-mail
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "data": {
+      "attributes": {
+        "email": "dbhuan@test.com",
+        "password": "123456"
+      }
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+}

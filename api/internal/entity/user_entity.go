@@ -12,7 +12,7 @@ type UserEntity struct {
 	// Thời gian tạo
 	CreatedDate time.Time `gorm:"column:createdDate;type:datetime;not null;default:current_timestamp"`
 	// Thời gian cập nhật
-	UpdatedDate time.Time `gorm:"column:updatedDate;type:datetime"`
+	UpdatedDate *time.Time `gorm:"column:updatedDate;type:datetime"`
 }
 
 func (UserEntity) TableName() string {

@@ -1,0 +1,26 @@
+meta {
+  name: Đăng ký user
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{BaseUrl}}/users/register
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "data": {
+      "attributes": {
+        "email": "dbhuan@test.com",
+        "password": "123456"
+      }
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+}

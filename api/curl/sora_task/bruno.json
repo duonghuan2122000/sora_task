@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "sora_task",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
