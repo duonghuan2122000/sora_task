@@ -20,7 +20,7 @@ func NewUserRepository() UserRepository {
 
 func (repo *userRepo) GetByEmail(email string) (*entity.UserEntity, error) {
 	var user entity.UserEntity
-	if err := database.MysqlConnect.Where(&entity.UserEntity{Email: email}).First(&user).Error; err != nil {
+	if err := database.MysqlConnect.Raw("SELECT id, email, passwordHashed, createdDate, updatedDate FROM soraUsers u WHERE u.email = ? LIMIT 1", email).Scan(&user).Error; err != nil {
 		return nil, err
 	}
 	return &user, nil

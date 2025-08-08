@@ -13,6 +13,7 @@ type Config struct {
 	TrustProxies          []string `mapstructure:"TRUST_PROXIES"`
 	AllowedOrigins        []string `mapstructure:"ALLOWED_ORIGINS"`
 	MysqlConnectionString string   `mapstructure:"MYSQL_CONNECTION_STRING"`
+	JwtSecret             string   `mapstructure:"JWT_SECRET"`
 }
 
 var AppConfig Config

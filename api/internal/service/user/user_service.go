@@ -1,6 +1,7 @@
 package userservice
 
 import (
+	"sorataskapi/config"
 	"sorataskapi/internal/entity"
 	usermodel "sorataskapi/internal/model/user"
 	userrepository "sorataskapi/internal/repository/user"
@@ -45,7 +46,7 @@ func (userSvc *userService) LoginByEmail(payload usermodel.LoginByEmailRequest) 
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	accessToken, err := token.SignedString([]byte("secret"))
+	accessToken, err := token.SignedString([]byte(config.AppConfig.JwtSecret))
 	if err != nil {
 		return nil, err
 	}

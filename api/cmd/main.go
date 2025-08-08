@@ -15,7 +15,7 @@ func main() {
 	config.LoadConfig(".")
 	database.InitMysql(config.AppConfig.MysqlConnectionString)
 
-	err := database.MysqlConnect.AutoMigrate(&entity.UserEntity{})
+	err := database.MysqlConnect.AutoMigrate(&entity.UserEntity{}, &entity.TenantEntity{}, &entity.TenantUserEntity{})
 	if err != nil {
 		fmt.Printf("Error migrate: %v", err)
 		return
