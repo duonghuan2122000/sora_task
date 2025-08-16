@@ -1,12 +1,16 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import '@/configs/ConfigGlobal';
 
-import App from './App.vue'
-import router from './router'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 
-const app = createApp(App)
+import App from './App.vue';
+import router from './router';
 
-app.use(createPinia())
-app.use(router)
+import 'ant-design-vue/dist/reset.css';
 
-app.mount('#app')
+const app = createApp(App);
+
+app.use(createPinia());
+app.use(router);
+
+app.mount('#app');

@@ -1,6 +1,7 @@
 package userhandler
 
 import (
+	"errors"
 	basehandler "sorataskapi/internal/handler/base"
 	basemodel "sorataskapi/internal/model/base"
 	usermodel "sorataskapi/internal/model/user"
@@ -29,6 +30,14 @@ func LoginByEmail(c *gin.Context) {
 
 	result, err := userSvc.LoginByEmail(payload.Data.Attributes)
 	if err != nil {
+		var loginErr *basemodel.LogicError
+		if errors.As(err, &loginErr) {
+			basehandler.ToResponseError(c, basemodel.BaseResponseError{
+				Code:    loginErr.Code,
+				Message: loginErr.Message,
+			})
+			return
+		}
 		basehandler.ToResponseError(c, basemodel.BaseResponseError{
 			Code:    "999",
 			Message: "Thất bại",

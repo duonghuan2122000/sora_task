@@ -5,14 +5,15 @@ import (
 	"sorataskapi/config"
 	"sorataskapi/internal/handler/healthz"
 	userhandler "sorataskapi/internal/handler/user"
+	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/unrolled/secure"
 )
 
 func SecurityMiddleware(appConfig config.Config) gin.HandlerFunc {
 	secureMiddleware := secure.New(secure.Options{
-		AllowedHosts:          appConfig.AllowedOrigins,
 		FrameDeny:             true,
 		ContentTypeNosniff:    true,
 		BrowserXssFilter:      true,
@@ -32,6 +33,15 @@ func SecurityMiddleware(appConfig config.Config) gin.HandlerFunc {
 }
 
 func InitRoutes(router *gin.Engine, appConfig config.Config) {
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     appConfig.AllowedOrigins,
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowCredentials: true,
+		AllowHeaders:     []string{"Content-Type", "Authorization", "Origin", "Host"},
+		ExposeHeaders:    []string{"Content-Length"},
+		MaxAge:           12 * time.Hour,
+	}))
+
 	router.Use(SecurityMiddleware(appConfig))
 
 	userhandler.InitHandler()

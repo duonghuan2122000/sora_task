@@ -3,6 +3,7 @@ package userservice
 import (
 	"sorataskapi/config"
 	"sorataskapi/internal/entity"
+	basemodel "sorataskapi/internal/model/base"
 	usermodel "sorataskapi/internal/model/user"
 	userrepository "sorataskapi/internal/repository/user"
 	"strings"
@@ -32,6 +33,13 @@ func (userSvc *userService) LoginByEmail(payload usermodel.LoginByEmailRequest) 
 	userEntity, err := userSvc.userRepo.GetByEmail(payload.Email)
 	if err != nil {
 		return nil, err
+	}
+
+	if userEntity == nil {
+		return nil, &basemodel.LogicError{
+			Code:    "204",
+			Message: "User không tồn tại",
+		}
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(userEntity.PasswordHashed), []byte(payload.Password))
