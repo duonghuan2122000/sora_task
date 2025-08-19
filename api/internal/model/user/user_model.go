@@ -7,6 +7,7 @@ type LoginByEmailRequest struct {
 
 type LoginByEmailResponse struct {
 	AccessToken string `json:"accessToken"`
+	ExpiresIn   int    `json:"expiresIn"`
 }
 
 type RegisterUserRequest struct {

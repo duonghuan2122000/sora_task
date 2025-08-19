@@ -14,6 +14,7 @@ type Config struct {
 	AllowedOrigins        []string `mapstructure:"ALLOWED_ORIGINS"`
 	MysqlConnectionString string   `mapstructure:"MYSQL_CONNECTION_STRING"`
 	JwtSecret             string   `mapstructure:"JWT_SECRET"`
+	JwtExpiresIn          int      `mapstructure:"JWT_EXPIRES_IN"`
 }
 
 var AppConfig Config

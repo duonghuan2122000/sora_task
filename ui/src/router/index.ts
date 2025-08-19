@@ -2,7 +2,7 @@ import RouterName from '@/configs/RouterName';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(window._basePath || import.meta.env.BASE_URL),
   routes: [
     {
       name: RouterName.Login,

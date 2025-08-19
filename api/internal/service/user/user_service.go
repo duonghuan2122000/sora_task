@@ -47,8 +47,10 @@ func (userSvc *userService) LoginByEmail(payload usermodel.LoginByEmailRequest) 
 		return nil, err
 	}
 
+	accessTokenExpiresIn := config.AppConfig.JwtExpiresIn
+
 	claims := jwt.MapClaims{
-		"exp": time.Now().UTC().Add(time.Hour * 1).Unix(),
+		"exp": time.Now().UTC().Add(time.Second * time.Duration(accessTokenExpiresIn)).Unix(),
 		"sub": userEntity.Id,
 	}
 
@@ -61,6 +63,7 @@ func (userSvc *userService) LoginByEmail(payload usermodel.LoginByEmailRequest) 
 
 	return &usermodel.LoginByEmailResponse{
 		AccessToken: accessToken,
+		ExpiresIn:   accessTokenExpiresIn,
 	}, nil
 }
 

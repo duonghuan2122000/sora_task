@@ -53,6 +53,7 @@ import { onMounted, ref } from 'vue';
 import * as yup from 'yup';
 import { useForm, Field } from 'vee-validate';
 import UserAPI from '@/apis/users/UserAPI';
+import ConfigGlobal from '@/configs/ConfigGlobal';
 
 const emailInputRef = ref<HTMLInputElement | null>(null);
 const isLoading = ref<boolean>(false);
@@ -105,6 +106,12 @@ const handleLogin = handleSubmit(async (payload) => {
         message.error('Đăng nhập thất bại. Vui lòng thử lại sau.');
         break;
     }
+  }
+
+  // Thực hiện store token
+  let accessToken = res.data?.accessToken;
+  if (accessToken && window._storeAuth == ConfigGlobal.StoreAuthLocation.LocalStorage) {
+    localStorage.setItem('accessToken', accessToken);
   }
 });
 </script>

@@ -25,3 +25,5 @@ type BaseResponseError struct {
 	// Thống báo
 	Message string `json:"message,omitempty"`
 }
+
+const CookieAccessToken = "x-sora-access-token"

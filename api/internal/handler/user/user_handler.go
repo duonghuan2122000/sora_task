@@ -45,6 +45,9 @@ func LoginByEmail(c *gin.Context) {
 		return
 	}
 
+	// thiết lập access token vào cookie
+	c.SetCookie(basemodel.CookieAccessToken, result.AccessToken, result.ExpiresIn, "", "", false, true)
+
 	basehandler.ToResponseSuccess(c, result)
 }
 
