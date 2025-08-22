@@ -1,0 +1,25 @@
+meta {
+  name: tạo tenant
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{BaseUrl}}/tenants/create
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "data": {
+      "attributes": {
+        "name": "Năm 2025"
+      }
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+}

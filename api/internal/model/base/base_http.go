@@ -26,4 +26,9 @@ type BaseResponseError struct {
 	Message string `json:"message,omitempty"`
 }
 
-const CookieAccessToken = "x-sora-access-token"
+const (
+	CookieAccessToken  = "x-sora-access-token"
+	CookieTenantId     = "x-sora-tenant-id"
+	CurrentUserInfoKey = "Sora:CurrentUser"
+	CurrentTenantIdKey = "Sora:CurrentTenantId"
+)

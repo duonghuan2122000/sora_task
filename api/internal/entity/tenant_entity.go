@@ -15,6 +15,10 @@ type TenantEntity struct {
 	CreatedDate time.Time `gorm:"column:createdDate;type:datetime;not null;default:current_timestamp"`
 	// Thời gian cập nhật
 	UpdatedDate *time.Time `gorm:"column:updatedDate;type:datetime"`
+	// Id người tạo
+	CreatedBy string `gorm:"column:createdBy;type:varchar(255);not null"`
+	// Id người cập nhật
+	UpdatedBy string `gorm:"column:updatedBy;type:varchar(255)"`
 }
 
 func (TenantEntity) TableName() string {

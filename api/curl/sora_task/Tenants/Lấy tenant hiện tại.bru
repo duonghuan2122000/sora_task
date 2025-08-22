@@ -1,0 +1,15 @@
+meta {
+  name: Lấy tenant hiện tại
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{BaseUrl}}/tenants/current
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

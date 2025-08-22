@@ -5,18 +5,12 @@ import (
 	basehandler "sorataskapi/internal/handler/base"
 	basemodel "sorataskapi/internal/model/base"
 	usermodel "sorataskapi/internal/model/user"
-	userrepository "sorataskapi/internal/repository/user"
 	userservice "sorataskapi/internal/service/user"
 
 	"github.com/gin-gonic/gin"
 )
 
-var userSvc userservice.UserService
-
-func InitHandler() {
-	userRepo := userrepository.NewUserRepository()
-	userSvc = userservice.NewUserService(userRepo)
-}
+var UserSvc userservice.UserService
 
 func LoginByEmail(c *gin.Context) {
 	var payload basemodel.BaseRequest[usermodel.LoginByEmailRequest]
@@ -28,7 +22,7 @@ func LoginByEmail(c *gin.Context) {
 		return
 	}
 
-	result, err := userSvc.LoginByEmail(payload.Data.Attributes)
+	result, err := UserSvc.LoginByEmail(payload.Data.Attributes)
 	if err != nil {
 		var loginErr *basemodel.LogicError
 		if errors.As(err, &loginErr) {
@@ -60,7 +54,7 @@ func RegisterUser(c *gin.Context) {
 		})
 		return
 	}
-	if err := userSvc.RegisterUser(payload.Data.Attributes); err != nil {
+	if err := UserSvc.RegisterUser(payload.Data.Attributes); err != nil {
 		basehandler.ToResponseError(c, basemodel.BaseResponseError{
 			Code:    "999",
 			Message: "Thất bại",

@@ -4,7 +4,14 @@ import (
 	"net/http"
 	"sorataskapi/config"
 	"sorataskapi/internal/handler/healthz"
+	tenanthandler "sorataskapi/internal/handler/tenant"
 	userhandler "sorataskapi/internal/handler/user"
+	"sorataskapi/internal/middleware"
+	tenantrepository "sorataskapi/internal/repository/tenant"
+	tenantuserrepository "sorataskapi/internal/repository/tenant_user"
+	userrepository "sorataskapi/internal/repository/user"
+	tenantservice "sorataskapi/internal/service/tenant"
+	userservice "sorataskapi/internal/service/user"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -44,12 +51,32 @@ func InitRoutes(router *gin.Engine, appConfig config.Config) {
 
 	router.Use(SecurityMiddleware(appConfig))
 
-	userhandler.InitHandler()
+	// đăng ký repository
+	userRepo := userrepository.NewUserRepository()
+	tenantRepo := tenantrepository.NewTenantRepository()
+	tenantUserRepo := tenantuserrepository.NewTenantUserRepository()
+
+	// đăng ký service
+	userSvc := userservice.NewUserService(userRepo)
+	tenantSvc := tenantservice.NewTenantService(tenantRepo, tenantUserRepo)
+
+	// đăng ký handler
+	userhandler.UserSvc = userSvc
+	tenanthandler.TenantSvc = tenantSvc
 
 	apiV1 := router.Group("/v1")
 
 	apiV1.GET("/healthz", healthz.CheckHealthz)
 
-	apiV1.POST("/users/login/by-mail", userhandler.LoginByEmail)
-	apiV1.POST("/users/register", userhandler.RegisterUser)
+	userRouter := apiV1.Group("/users")
+
+	userRouter.POST("/login/by-mail", userhandler.LoginByEmail)
+	userRouter.POST("/register", userhandler.RegisterUser)
+
+	tenantRouter := apiV1.Group("/tenants")
+	tenantRouter.Use(middleware.AuthMiddleware())
+	tenantRouter.GET("/me", tenanthandler.GetListByUser)
+	tenantRouter.POST("/create", tenanthandler.Create)
+	tenantRouter.GET("/current", middleware.TenantMiddleware(), tenanthandler.GetCurrent)
+	tenantRouter.POST("/select", tenanthandler.Select)
 }

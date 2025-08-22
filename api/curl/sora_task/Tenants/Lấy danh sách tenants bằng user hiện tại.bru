@@ -1,0 +1,15 @@
+meta {
+  name: Lấy danh sách tenants bằng user hiện tại
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{BaseUrl}}/tenants/me
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

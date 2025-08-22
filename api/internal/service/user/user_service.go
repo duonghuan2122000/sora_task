@@ -49,9 +49,9 @@ func (userSvc *userService) LoginByEmail(payload usermodel.LoginByEmailRequest) 
 
 	accessTokenExpiresIn := config.AppConfig.JwtExpiresIn
 
-	claims := jwt.MapClaims{
-		"exp": time.Now().UTC().Add(time.Second * time.Duration(accessTokenExpiresIn)).Unix(),
-		"sub": userEntity.Id,
+	claims := &usermodel.CurrentUserDto{
+		Exp:    time.Now().UTC().Add(time.Second * time.Duration(accessTokenExpiresIn)).Unix(),
+		UserId: userEntity.Id,
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
