@@ -69,9 +69,9 @@ func InitRoutes(router *gin.Engine, appConfig config.Config) {
 	apiV1.GET("/healthz", healthz.CheckHealthz)
 
 	userRouter := apiV1.Group("/users")
-
 	userRouter.POST("/login/by-mail", userhandler.LoginByEmail)
 	userRouter.POST("/register", userhandler.RegisterUser)
+	userRouter.GET("/verify", middleware.AuthMiddleware(), userhandler.VerifyUser)
 
 	tenantRouter := apiV1.Group("/tenants")
 	tenantRouter.Use(middleware.AuthMiddleware())

@@ -15,11 +15,36 @@ const login = async (payload: LoginUserRequest): Promise<BaseResponse<LoginUserR
       method: 'POST',
       url: '/users/login/by-mail',
       data: reqBody,
-      timeout: 5000,
     });
     return res;
   } catch (error) {
-    console.log(error);
+    if (error instanceof RequestTimeoutError) {
+      return {
+        status: false,
+        error: {
+          code: '408',
+          message: 'Timeout khi thực hiện request',
+        },
+      };
+    }
+    return {
+      status: false,
+      error: {
+        code: '500',
+        message: 'Có lỗi xảy ra',
+      },
+    };
+  }
+};
+
+const verifyUser = async () => {
+  try {
+    const res = await HttpBase.makeRequest<BaseResponse<void>>({
+      method: 'GET',
+      url: '/users/verify',
+    });
+    return res;
+  } catch (error) {
     if (error instanceof RequestTimeoutError) {
       return {
         status: false,
@@ -41,4 +66,5 @@ const login = async (payload: LoginUserRequest): Promise<BaseResponse<LoginUserR
 
 export default {
   login,
+  verifyUser,
 } as const;

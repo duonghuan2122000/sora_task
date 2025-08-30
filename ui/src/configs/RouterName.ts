@@ -3,4 +3,6 @@ export default {
   Login: 'Login',
   // Router đăng ký
   Register: 'Register',
+  // Trang chủ
+  Home: 'Home',
 } as const;

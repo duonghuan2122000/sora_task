@@ -1,0 +1,15 @@
+meta {
+  name: Kiểm tra người dùng đã đăng nhập chưa?
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{BaseUrl}}/users/verify
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

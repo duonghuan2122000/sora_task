@@ -6,8 +6,18 @@ meta {
 
 post {
   url: {{BaseUrl}}/tenants/select
-  body: none
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+    "data": {
+      "attributes": {
+        "id": "f8ff220a101c42869bc2c375c61b873b"
+      }
+    }
+  }
 }
 
 settings {

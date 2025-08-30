@@ -63,3 +63,7 @@ func RegisterUser(c *gin.Context) {
 	}
 	basehandler.ToResponseSuccess(c, nil)
 }
+
+func VerifyUser(c *gin.Context) {
+	basehandler.ToResponseSuccess(c, nil)
+}

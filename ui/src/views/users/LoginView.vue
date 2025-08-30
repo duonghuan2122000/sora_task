@@ -54,9 +54,14 @@ import * as yup from 'yup';
 import { useForm, Field } from 'vee-validate';
 import UserAPI from '@/apis/users/UserAPI';
 import ConfigGlobal from '@/configs/ConfigGlobal';
+import { useAuthStore } from '@/stores/auth';
+import { useRouter } from 'vue-router';
 
 const emailInputRef = ref<HTMLInputElement | null>(null);
 const isLoading = ref<boolean>(false);
+
+const authStore = useAuthStore();
+const router = useRouter();
 
 const loginSchema = yup.object({
   email: yup.string().required('Email là bắt buộc').email('Email không hợp lệ').trim(),
@@ -106,6 +111,7 @@ const handleLogin = handleSubmit(async (payload) => {
         message.error('Đăng nhập thất bại. Vui lòng thử lại sau.');
         break;
     }
+    return;
   }
 
   // Thực hiện store token
@@ -113,6 +119,9 @@ const handleLogin = handleSubmit(async (payload) => {
   if (accessToken && window._storeAuth == ConfigGlobal.StoreAuthLocation.LocalStorage) {
     localStorage.setItem('accessToken', accessToken);
   }
+
+  authStore.isAuthenticated = true;
+  router.push({ name: RouterName.Home });
 });
 </script>
 

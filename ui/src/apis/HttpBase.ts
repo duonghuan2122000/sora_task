@@ -26,12 +26,12 @@ const makeRequest = async <T>({
   method,
   url,
   data,
-  timeout = 30000, // 30s
+  timeout = 5000, // 5 seconds
   baseUrl = window._apis.baseUrl,
 }: {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   url: string;
-  data: any;
+  data?: any;
   timeout?: number;
   baseUrl?: string;
 }) => {
@@ -49,7 +49,7 @@ const makeRequest = async <T>({
       },
       redirect: 'follow', // manual, *follow, error
       referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(data), // body data type must match "Content-Type" header
+      body: data ? JSON.stringify(data) : null, // body data type must match "Content-Type" header
     });
     clearTimeout(id);
     return (await response.json()) as T; // parses JSON response into native JavaScript objects
