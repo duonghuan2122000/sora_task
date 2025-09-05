@@ -9,5 +9,6 @@ html,
 body,
 * {
   font-size: 14px;
+  font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
 }
 </style>
